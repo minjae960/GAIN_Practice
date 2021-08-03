@@ -12,7 +12,7 @@ import numpy as np
 from data_loader import data_loader
 from gain import gain
 from utils import rmse_loss
-
+from utils import knn
 
 def main (args):
   '''Main function for UCI letter and spam datasets.
@@ -41,16 +41,23 @@ def main (args):
   # Load data and introduce missingness
   ori_data_x, miss_data_x, data_m = data_loader(data_name, miss_rate)
   
-  # Impute missing data
+  # Impute missing data(GAIN)
   imputed_data_x = gain(miss_data_x, gain_parameters)
+
+  # Impute missing data(KNN)
+  knn_data_x = knn(miss_data_x, 3)
   
   # Report the RMSE performance
-  rmse = rmse_loss (ori_data_x, imputed_data_x, data_m)
-  
+  rmse = rmse_loss(ori_data_x, imputed_data_x, data_m)
+  rmse_knn = rmse_loss(ori_data_x, knn_data_x, data_m)
+
+  # r-square value
+
   print()
-  print('RMSE Performance: ' + str(np.round(rmse, 4)))
-  
-  return imputed_data_x, rmse
+  print('GAIN RMSE Performance: ' + str(np.round(rmse, 4)))
+  print('KNN RMSE Performance: ' + str(np.round(rmse_knn, 4)))
+
+  return ori_data_x, miss_data_x, data_m, imputed_data_x, knn_data_x, rmse, rmse_knn
 
 if __name__ == '__main__':  
   
@@ -58,8 +65,8 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument(
       '--data_name',
-      choices=['letter','spam'],
-      default='spam',
+      choices=['letter','spam', 'pm'],
+      default='pm',
       type=str)
   parser.add_argument(
       '--miss_rate',
@@ -90,4 +97,15 @@ if __name__ == '__main__':
   args = parser.parse_args() 
   
   # Calls main function  
-  imputed_data, rmse = main(args)
+  ori_data_x, miss_data_x, data_m, imputed_data_x, knn_data_x, rmse, rmse_knn = main(args)
+
+REAL = ori_data_x[data_m==0]
+GAIN_imputed = imputed_data_x[data_m==0]
+KNN_imputed = knn_data_x[data_m==0]
+
+from scipy import stats
+
+slope_GAIN, intercept_GAIN, r_value_GAIN, p_value_GAIN, std_err_GAIN = stats.linregress(REAL, GAIN_imputed)
+slope_KNN, intercept_KNN, r_value_KNN, p_value_KNN, std_err_KNN = stats.linregress(REAL, KNN_imputed)
+
+print(round(r_value_GAIN**2, 4), round(r_value_KNN**2, 2))

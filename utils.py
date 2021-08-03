@@ -15,7 +15,14 @@ import numpy as np
 #import tensorflow as tf
 ##IF USING TF 2 use following import to still use TF < 2.0 Functionalities
 import tensorflow.compat.v1 as tf
+from sklearn.impute import KNNImputer
 tf.disable_v2_behavior()
+
+def knn(data, n):
+  imputer = KNNImputer(n_neighbors = n)
+  knn_data_x = imputer.fit_transform(data)
+
+  return knn_data_x
 
 
 def normalization (data, parameters=None):

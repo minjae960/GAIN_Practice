@@ -4,7 +4,7 @@
 # Necessary packages
 import numpy as np
 from utils import binary_sampler
-from keras.datasets import mnist
+from tensorflow.keras.datasets import mnist
 
 
 def data_loader (data_name, miss_rate):
@@ -21,7 +21,7 @@ def data_loader (data_name, miss_rate):
   '''
   
   # Load data
-  if data_name in ['letter', 'spam']:
+  if data_name in ['letter', 'spam', 'pm']:
     file_name = 'data/'+data_name+'.csv'
     data_x = np.loadtxt(file_name, delimiter=",", skiprows=1)
   elif data_name == 'mnist':
