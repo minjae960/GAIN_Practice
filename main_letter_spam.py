@@ -99,6 +99,7 @@ if __name__ == '__main__':
   # Calls main function  
   ori_data_x, miss_data_x, data_m, imputed_data_x, knn_data_x, rmse, rmse_knn = main(args)
 
+# r-square values of GAIN and KNN
 REAL = ori_data_x[data_m==0]
 GAIN_imputed = imputed_data_x[data_m==0]
 KNN_imputed = knn_data_x[data_m==0]
@@ -108,4 +109,6 @@ from scipy import stats
 slope_GAIN, intercept_GAIN, r_value_GAIN, p_value_GAIN, std_err_GAIN = stats.linregress(REAL, GAIN_imputed)
 slope_KNN, intercept_KNN, r_value_KNN, p_value_KNN, std_err_KNN = stats.linregress(REAL, KNN_imputed)
 
-print(round(r_value_GAIN**2, 4), round(r_value_KNN**2, 2))
+print()
+print('GAIN r-square value is', round(r_value_GAIN**2, 4))
+print('KNN r-square value is', round(r_value_KNN**2, 2))
