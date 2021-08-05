@@ -71,7 +71,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--miss_rate',
       help='missing data probability',
-      default=0.4,
+      default=0.2,
       type=float)
   parser.add_argument(
       '--batch_size',
