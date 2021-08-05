@@ -15,6 +15,8 @@ import numpy as np
 #import tensorflow as tf
 ##IF USING TF 2 use following import to still use TF < 2.0 Functionalities
 import tensorflow.compat.v1 as tf
+import pandas as pd
+import random
 from sklearn.impute import KNNImputer
 tf.disable_v2_behavior()
 
@@ -155,6 +157,26 @@ def xavier_init(size):
   xavier_stddev = 1. / tf.sqrt(in_dim / 2.)
   return tf.random_normal(shape = size, stddev = xavier_stddev)
       
+def random_sampler(p, rows, cols, data):
+  unif_matrix = np.full((rows, cols), 1)
+  num_rows = int(rows*p)
+  random_row = random.sample(range(rows), num_rows)
+
+  data_x_col = pd.read_csv('data/pm.csv').columns.tolist()
+  col_dic = {'ocec': ['OC', 'EC'],
+             'ion': ['Si', 'S', 'K', 'Ca', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Ni', 'Cu', 'Zn', 'As', 'Se', 'Br', 'Ba', 'Pb'],
+             'com': ['SO42.', 'NO3.', 'Cl.', 'Na.', 'NH4.', 'K.', 'Mg2.', 'Ca2.'],
+             'pm': ['PM2.5', 'PM10']}
+
+  col = []
+  for k in col_dic[data]:
+    index = data_x_col.index(k)
+    col.append(index)
+
+  for i in col:
+    unif_matrix[random_row, i] = 0
+  return unif_matrix
+
 
 def binary_sampler(p, rows, cols):
   '''Sample binary random variables.

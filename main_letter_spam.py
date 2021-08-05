@@ -32,6 +32,7 @@ def main (args):
   
   data_name = args.data_name
   miss_rate = args.miss_rate
+  data_type = args.data_type
   
   gain_parameters = {'batch_size': args.batch_size,
                      'hint_rate': args.hint_rate,
@@ -39,7 +40,7 @@ def main (args):
                      'iterations': args.iterations}
   
   # Load data and introduce missingness
-  ori_data_x, miss_data_x, data_m = data_loader(data_name, miss_rate)
+  ori_data_x, miss_data_x, data_m = data_loader(data_name, miss_rate, data_type)
   
   # Impute missing data(GAIN)
   imputed_data_x = gain(miss_data_x, gain_parameters)
@@ -73,6 +74,12 @@ if __name__ == '__main__':
       help='missing data probability',
       default=0.2,
       type=float)
+  parser.add_argument(
+      '--data_type',
+      help='data type',
+      choices=['ocec', 'ion', 'com', 'pm'],
+      default='com',
+      type=str)
   parser.add_argument(
       '--batch_size',
       help='the number of samples in mini-batch',
