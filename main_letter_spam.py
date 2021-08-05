@@ -72,13 +72,13 @@ if __name__ == '__main__':
   parser.add_argument(
       '--miss_rate',
       help='missing data probability',
-      default=0.2,
+      default=0.1,
       type=float)
   parser.add_argument(
       '--data_type',
       help='data type',
       choices=['ocec', 'ion', 'com', 'pm'],
-      default='com',
+      default='ion',
       type=str)
   parser.add_argument(
       '--batch_size',
@@ -118,4 +118,4 @@ slope_KNN, intercept_KNN, r_value_KNN, p_value_KNN, std_err_KNN = stats.linregre
 
 print()
 print('GAIN r-square value is', round(r_value_GAIN**2, 4))
-print('KNN r-square value is', round(r_value_KNN**2, 2))
+print('KNN r-square value is', round(r_value_KNN**2, 4))
