@@ -88,7 +88,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--data_type',
       help='data type',
-      choices=['ocec', 'ele', 'ion'],
+      choices=['ocec', 'ele', 'ion', 'ocec+ele', 'ocec+ion', 'ele+ion', 'all'],
       default='ion',
       type=str)
   parser.add_argument(

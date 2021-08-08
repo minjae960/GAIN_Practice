@@ -34,7 +34,6 @@ def data_loader (data_name, miss_rate, data_type):
   
   # Introduce missing data
   data_m = random_sampler(miss_rate, no, dim, data_type)
-
   miss_data_x = data_x.copy()
   miss_data_x[data_m == 0] = np.nan
       

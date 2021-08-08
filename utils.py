@@ -177,8 +177,8 @@ def random_sampler(p, rows, cols, data):
     index = data_x_col.index(k)
     col.append(index)
 
-  for i in col:
-    unif_matrix[random_row, i] = 0
+  unif_matrix[np.ix_(random_row, col)] = 0
+
   return unif_matrix
 
 
