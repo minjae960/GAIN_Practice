@@ -8,6 +8,7 @@ from __future__ import print_function
 
 import argparse
 import numpy as np
+from scipy import stats
 
 from data_loader import data_loader
 from gain import gain
@@ -51,11 +52,21 @@ def main (args):
   rmse = rmse_loss(ori_data_x, imputed_data_x, data_m)
   rmse_knn = rmse_loss(ori_data_x, knn_data_x, data_m)
 
-  # r-square value
-
   print()
   print('GAIN RMSE Performance: ' + str(np.round(rmse, 4)))
   print('KNN RMSE Performance: ' + str(np.round(rmse_knn, 4)))
+
+  # r-square values of GAIN and KNN
+  REAL = ori_data_x[data_m == 0]
+  GAIN_imputed = imputed_data_x[data_m == 0]
+  KNN_imputed = knn_data_x[data_m == 0]
+
+  slope_GAIN, intercept_GAIN, r_value_GAIN, p_value_GAIN, std_err_GAIN = stats.linregress(REAL, GAIN_imputed)
+  slope_KNN, intercept_KNN, r_value_KNN, p_value_KNN, std_err_KNN = stats.linregress(REAL, KNN_imputed)
+
+  print()
+  print('GAIN r-square value is', round(r_value_GAIN ** 2, 4))
+  print('KNN r-square value is', round(r_value_KNN ** 2, 4))
 
   return ori_data_x, miss_data_x, data_m, imputed_data_x, knn_data_x, rmse, rmse_knn
 
@@ -71,7 +82,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--miss_rate',
       help='missing data probability',
-      default=0.2,
+      default=0.8,
       type=float)
   parser.add_argument(
       '--batch_size',
@@ -99,16 +110,3 @@ if __name__ == '__main__':
   # Calls main function  
   ori_data_x, miss_data_x, data_m, imputed_data_x, knn_data_x, rmse, rmse_knn = main(args)
 
-# r-square values of GAIN and KNN
-REAL = ori_data_x[data_m==0]
-GAIN_imputed = imputed_data_x[data_m==0]
-KNN_imputed = knn_data_x[data_m==0]
-
-from scipy import stats
-
-slope_GAIN, intercept_GAIN, r_value_GAIN, p_value_GAIN, std_err_GAIN = stats.linregress(REAL, GAIN_imputed)
-slope_KNN, intercept_KNN, r_value_KNN, p_value_KNN, std_err_KNN = stats.linregress(REAL, KNN_imputed)
-
-print()
-print('GAIN r-square value is', round(r_value_GAIN**2, 4))
-print('KNN r-square value is', round(r_value_KNN**2, 4))
