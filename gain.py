@@ -36,7 +36,7 @@ def gain (data_x, gain_parameters):
   '''
   # Define mask matrix
   data_m = 1-np.isnan(data_x)
-  
+
   # System parameters
   batch_size = gain_parameters['batch_size']
   hint_rate = gain_parameters['hint_rate']
@@ -148,7 +148,7 @@ def gain (data_x, gain_parameters):
     # Sample random vectors  
     Z_mb = uniform_sampler(0, 0.01, batch_size, dim) 
     # Sample hint vectors
-    H_mb_temp = binary_sampler(hint_rate, batch_size, dim)
+    H_mb_temp = random_sampler(hint_rate, batch_size, dim)
     H_mb = M_mb * H_mb_temp
       
     # Combine random vectors with observed vectors

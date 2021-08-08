@@ -83,7 +83,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--miss_rate',
       help='missing data probability',
-      default=0.2,
+      default=0.5,
       type=float)
   parser.add_argument(
       '--data_type',

@@ -172,10 +172,7 @@ def random_sampler(p, rows, cols, data):
              'all': ['OC', 'EC', 'SO42.', 'NO3.', 'Cl.', 'Na.', 'NH4.', 'K.', 'Mg2.', 'Ca2.', 'Si', 'S', 'K', 'Ca', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Ni', 'Cu', 'Zn', 'As', 'Se', 'Br', 'Ba', 'Pb']
              }
 
-  col = []
-  for k in col_dic[data]:
-    index = data_x_col.index(k)
-    col.append(index)
+  col = random.sample(range(len(data_x_col)), 7)
 
   unif_matrix[np.ix_(random_row, col)] = 0
 
