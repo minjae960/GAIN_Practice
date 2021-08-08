@@ -44,7 +44,7 @@ def main (args):
   ori_data_x, miss_data_x, data_m = data_loader(data_name, miss_rate, data_type)
   
   # Impute missing data(GAIN)
-  imputed_data_x = gain(miss_data_x, gain_parameters)
+  imputed_data_x = gain(miss_data_x, gain_parameters, data_type)
 
   # Impute missing data(KNN)
   knn_data_x = knn(miss_data_x, 3)
@@ -89,12 +89,12 @@ if __name__ == '__main__':
       '--data_type',
       help='data type',
       choices=['ocec', 'ele', 'ion', 'ocec+ele', 'ocec+ion', 'ele+ion', 'all'],
-      default='ele',
+      default='ion',
       type=str)
   parser.add_argument(
       '--batch_size',
       help='the number of samples in mini-batch',
-      default=128,
+      default=1000,
       type=int)
   parser.add_argument(
       '--hint_rate',

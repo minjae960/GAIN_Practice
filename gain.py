@@ -17,10 +17,10 @@ from tqdm import tqdm
 
 from utils import normalization, renormalization, rounding
 from utils import xavier_init
-from utils import binary_sampler, uniform_sampler, sample_batch_index
+from utils import binary_sampler, uniform_sampler, sample_batch_index, random_sampler
 
 
-def gain (data_x, gain_parameters):
+def gain (data_x, gain_parameters, data_type):
   '''Impute missing values in data_x
   
   Args:
@@ -148,7 +148,8 @@ def gain (data_x, gain_parameters):
     # Sample random vectors  
     Z_mb = uniform_sampler(0, 0.01, batch_size, dim) 
     # Sample hint vectors
-    H_mb_temp = random_sampler(hint_rate, batch_size, dim)
+    # H_mb_temp = binary_sampler(hint_rate, batch_size, dim)
+    H_mb_temp = random_sampler(hint_rate, batch_size, dim, data_type)
     H_mb = M_mb * H_mb_temp
       
     # Combine random vectors with observed vectors
