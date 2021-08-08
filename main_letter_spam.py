@@ -89,12 +89,12 @@ if __name__ == '__main__':
       '--data_type',
       help='data type',
       choices=['ocec', 'ele', 'ion', 'ocec+ele', 'ocec+ion', 'ele+ion', 'all'],
-      default='ion',
+      default='ocec+ion',
       type=str)
   parser.add_argument(
       '--batch_size',
       help='the number of samples in mini-batch',
-      default=1000,
+      default=128,
       type=int)
   parser.add_argument(
       '--hint_rate',
@@ -104,7 +104,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--alpha',
       help='hyperparameter',
-      default=100,
+      default=1000,
       type=float)
   parser.add_argument(
       '--iterations',
