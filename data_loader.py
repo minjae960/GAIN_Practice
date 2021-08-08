@@ -32,7 +32,7 @@ def data_loader (data_name, miss_rate):
   no, dim = data_x.shape
   
   # Introduce missing data
-  data_m = binary_sampler(1-miss_rate, no, dim)
+  data_m = binary_sampler(miss_rate, no, dim)
   miss_data_x = data_x.copy()
   miss_data_x[data_m == 0] = np.nan
       

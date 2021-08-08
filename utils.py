@@ -155,7 +155,7 @@ def xavier_init(size):
   xavier_stddev = 1. / tf.sqrt(in_dim / 2.)
   return tf.random_normal(shape = size, stddev = xavier_stddev)
       
-
+import random
 def binary_sampler(p, rows, cols):
   '''Sample binary random variables.
   
@@ -167,9 +167,19 @@ def binary_sampler(p, rows, cols):
   Returns:
     - binary_random_matrix: generated binary random matrix.
   '''
-  unif_random_matrix = np.random.uniform(0., 1., size = [rows, cols])
-  binary_random_matrix = 1*(unif_random_matrix < p)
-  return binary_random_matrix
+  # unif_random_matrix = np.random.uniform(0., 1., size = [rows, cols])
+  # binary_random_matrix = 1*(unif_random_matrix < p)
+  # return binary_random_matrix
+
+  data_m = np.ones(rows*cols)
+  rand_num = int(p*rows*cols)
+  rand = random.sample(range(len(data_m)), rand_num)
+
+  data_m[rand]=0
+
+  data_m = data_m.reshape((rows, cols))
+
+  return data_m
 
 
 def uniform_sampler(low, high, rows, cols):
