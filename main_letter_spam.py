@@ -69,7 +69,7 @@ def main (args):
   print('GAIN r-square value is', round(r_value_GAIN ** 2, 4))
   print('KNN r-square value is', round(r_value_KNN ** 2, 4))
 
-  return ori_data_x, miss_data_x, data_m, imputed_data_x, knn_data_x
+  return ori_data_x, miss_data_x, data_m, imputed_data_x, knn_data_x, REAL, GAIN_imputed, KNN_imputed
 
 if __name__ == '__main__':  
   
@@ -78,7 +78,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--data_name',
       choices=['letter','spam', 'pm', 'pm_wthr'],
-      default='pm',
+      default='pm_wthr',
       type=str)
   parser.add_argument(
       '--miss_rate',
@@ -89,12 +89,12 @@ if __name__ == '__main__':
       '--data_type',
       help='data type',
       choices=['ocec', 'ele', 'ion', 'ocec+ele', 'ocec+ion', 'ele+ion', 'all'],
-      default='ocec+ion',
+      default='all',
       type=str)
   parser.add_argument(
       '--batch_size',
       help='the number of samples in mini-batch',
-      default=128,
+      default=1000,
       type=int)
   parser.add_argument(
       '--hint_rate',
@@ -104,7 +104,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--alpha',
       help='hyperparameter',
-      default=100,
+      default=1000,
       type=float)
   parser.add_argument(
       '--iterations',
@@ -115,5 +115,5 @@ if __name__ == '__main__':
   args = parser.parse_args() 
   
   # Calls main function  
-  ori_data_x, miss_data_x, data_m, imputed_data_x, knn_data_x = main(args)
+  ori_data_x, miss_data_x, data_m, imputed_data_x, knn_data_x, REAL, GAIN, KNN = main(args)
 

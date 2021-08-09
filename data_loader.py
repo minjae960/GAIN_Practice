@@ -34,7 +34,7 @@ def data_loader (data_name, miss_rate, data_type):
   no, dim = data_x.shape
   
   # Introduce missing data
-  random.seed(777)
+  # random.seed(777)
 
   data_m = random_sampler(miss_rate, no, dim, data_type)
   miss_data_x = data_x.copy()
