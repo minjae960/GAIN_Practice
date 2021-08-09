@@ -77,7 +77,7 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument(
       '--data_name',
-      choices=['letter','spam', 'pm'],
+      choices=['letter','spam', 'pm', 'pm_wthr'],
       default='pm',
       type=str)
   parser.add_argument(
@@ -104,7 +104,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--alpha',
       help='hyperparameter',
-      default=1000,
+      default=100,
       type=float)
   parser.add_argument(
       '--iterations',

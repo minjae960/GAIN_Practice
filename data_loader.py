@@ -23,7 +23,7 @@ def data_loader (data_name, miss_rate, data_type):
   '''
   
   # Load data
-  if data_name in ['letter', 'spam', 'pm']:
+  if data_name in ['letter', 'spam', 'pm', 'pm_wthr']:
     file_name = 'data/'+data_name+'.csv'
     data_x = np.loadtxt(file_name, delimiter=",", skiprows=1)
   elif data_name == 'mnist':
@@ -35,6 +35,7 @@ def data_loader (data_name, miss_rate, data_type):
   
   # Introduce missing data
   random.seed(777)
+
   data_m = random_sampler(miss_rate, no, dim, data_type)
   miss_data_x = data_x.copy()
   miss_data_x[data_m == 0] = np.nan
