@@ -151,7 +151,8 @@ def gain (data_x, gain_parameters, data_type):
     # H_mb_temp = binary_sampler(hint_rate, batch_size, dim)
     H_mb_temp = random_sampler(1-hint_rate, batch_size, dim, data_type)
     H_mb = M_mb * H_mb_temp
-      
+    # H_mb = M_mb * H_mb_temp+0.5*(1-H_mb_temp)
+
     # Combine random vectors with observed vectors
     X_mb = M_mb * X_mb + (1-M_mb) * Z_mb 
       
