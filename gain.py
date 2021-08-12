@@ -91,11 +91,11 @@ def gain (data_x, gain_parameters):
   # Generator
   def generator(x,m):
     # Concatenate Mask and Data
-    inputs = tf.concat(values = [x, m], axis = 1) 
+    inputs = tf.concat(values = [x, m], axis = 1) # [batxh_size, dim*2]
     G_h1 = tf.nn.relu(tf.matmul(inputs, G_W1) + G_b1)
     G_h2 = tf.nn.relu(tf.matmul(G_h1, G_W2) + G_b2)   
     # MinMax normalized output
-    G_prob = tf.nn.sigmoid(tf.matmul(G_h2, G_W3) + G_b3) 
+    G_prob = tf.nn.sigmoid(tf.matmul(G_h2, G_W3) + G_b3) # [batch_size, dim] size, 0~1
     return G_prob
       
   # Discriminator
@@ -105,18 +105,18 @@ def gain (data_x, gain_parameters):
     D_h1 = tf.nn.relu(tf.matmul(inputs, D_W1) + D_b1)  
     D_h2 = tf.nn.relu(tf.matmul(D_h1, D_W2) + D_b2)
     D_logit = tf.matmul(D_h2, D_W3) + D_b3
-    D_prob = tf.nn.sigmoid(D_logit)
+    D_prob = tf.nn.sigmoid(D_logit) # [batch_size, dim] size, 0~1
     return D_prob
   
   ## GAIN structure
   # Generator
-  G_sample = generator(X, M)
+  G_sample = generator(X, M) # hypothesis of logits
  
   # Combine with observed data
-  Hat_X = X * M + G_sample * (1-M)
+  Hat_X = X * M + G_sample * (1-M) # imputed matrix
   
   # Discriminator
-  D_prob = discriminator(Hat_X, H)
+  D_prob = discriminator(Hat_X, H) # estimated mask matrix 0~1
   
   ## GAIN loss
   D_loss_temp = -tf.reduce_mean(M * tf.log(D_prob + 1e-8) \
