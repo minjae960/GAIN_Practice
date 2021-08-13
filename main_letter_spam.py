@@ -47,7 +47,12 @@ def main (args):
   imputed_data_x = gain(miss_data_x, gain_parameters, data_type)
 
   # Impute missing data(KNN)
-  knn_data_x = knn(miss_data_x, 3)
+  min_vector = np.nanmin(miss_data_x, axis=0)
+  max_vector = np.nanmax(miss_data_x, axis=0)
+
+  knn_norm_x = (miss_data_x - min_vector) / (max_vector - min_vector)
+  knn_data_x = knn(knn_norm_x, 3)
+  knn_data_x = knn_data_x * (max_vector - min_vector) + min_vector
   
   # Report the RMSE performance
   rmse = rmse_loss(ori_data_x, imputed_data_x, data_m)
@@ -78,7 +83,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--data_name',
       choices=['letter','spam', 'pm', 'pm_wthr'],
-      default='pm_wthr',
+      default='pm',
       type=str)
   parser.add_argument(
       '--miss_rate',
@@ -89,7 +94,7 @@ if __name__ == '__main__':
       '--data_type',
       help='data type',
       choices=['ocec', 'ele', 'ion', 'ocec+ele', 'ocec+ion', 'ele+ion', 'all'],
-      default='ele',
+      default='ocec',
       type=str)
   parser.add_argument(
       '--batch_size',
@@ -109,11 +114,10 @@ if __name__ == '__main__':
   parser.add_argument(
       '--iterations',
       help='number of training interations',
-      default=10000,
+      default=1000,
       type=int)
   
   args = parser.parse_args() 
   
   # Calls main function  
   ori_data_x, miss_data_x, data_m, imputed_data_x, knn_data_x, REAL, GAIN, KNN = main(args)
-

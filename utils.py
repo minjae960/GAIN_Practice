@@ -226,6 +226,3 @@ def sample_batch_index(total, batch_size):
   total_idx = np.random.permutation(total)
   batch_idx = total_idx[:batch_size]
   return batch_idx
-  
-
-  
