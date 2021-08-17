@@ -114,7 +114,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--iterations',
       help='number of training interations',
-      default=1000,
+      default=10000,
       type=int)
   
   args = parser.parse_args() 
