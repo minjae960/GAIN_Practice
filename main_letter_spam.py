@@ -88,13 +88,13 @@ if __name__ == '__main__':
   parser.add_argument(
       '--miss_rate',
       help='missing data probability',
-      default=0.2,
+      default=0.4,
       type=float)
   parser.add_argument(
       '--data_type',
       help='data type',
       choices=['ocec', 'ele', 'ion', 'ocec+ele', 'ocec+ion', 'ele+ion', 'all'],
-      default='ocec',
+      default='ion',
       type=str)
   parser.add_argument(
       '--batch_size',
@@ -114,7 +114,7 @@ if __name__ == '__main__':
   parser.add_argument(
       '--iterations',
       help='number of training interations',
-      default=10000,
+      default=20000,
       type=int)
   
   args = parser.parse_args() 

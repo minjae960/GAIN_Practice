@@ -161,6 +161,9 @@ def gain (data_x, gain_parameters, data_type):
     _, G_loss_curr, MSE_loss_curr = \
     sess.run([G_solver, G_loss_temp, MSE_loss],
              feed_dict = {X: X_mb, M: M_mb, H: H_mb})
+
+    if it % 1000 == 0:
+      print(D_loss_curr, G_loss_curr, MSE_loss_curr)
             
   ## Return imputed data      
   Z_mb = uniform_sampler(0, 0.01, no, dim) 
